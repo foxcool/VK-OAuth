@@ -62,12 +62,12 @@ sub request {
 
     Carp::croak("method and access_token required for this action")
       unless ($method, $access_token);
-    $url = URI->new('https://api.vk.com/method/' . $method);
+    my $url = URI->new('https://api.vk.com/method/' . $method);
     $url->query_form(
         access_token => $access_token,
         $params && %$params ? %$params : undef,
     );
-    $response = $self->{ua}->get($url);
+    my $response = $self->{ua}->get($url);
     return 0 unless $response->is_success;
     my $obj = $self->{json}->from_json($response->content);
 
