@@ -51,7 +51,7 @@ sub request_access_token {
     );
     my $response = $self->{ua}->get($url);
     return 0 unless $response->is_success;
-    my $obj = $self->{json}->from_json($response->content);
+    my $obj = $self->{json}->decode($response->content);
 
     # $obj->{user_id}, $obj->{access_token}, $obj->{expires_in}
     return $obj;
@@ -61,7 +61,7 @@ sub request {
     my ($self, $method, $params, $access_token) = @_;
 
     Carp::croak("method and access_token required for this action")
-      unless ($method, $access_token);
+      unless ($method && $access_token);
     my $url = URI->new('https://api.vk.com/method/' . $method);
     $url->query_form(
         access_token => $access_token,
@@ -69,7 +69,7 @@ sub request {
     );
     my $response = $self->{ua}->get($url);
     return 0 unless $response->is_success;
-    my $obj = $self->{json}->from_json($response->content);
+    my $obj = $self->{json}->decode($response->content);
 
     return $obj;
 }
