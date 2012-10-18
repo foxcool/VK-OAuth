@@ -58,7 +58,7 @@ sub request_access_token {
 }
 
 sub request {
-    my ($self, $method, $params, $access_token) = @_;
+    my ( $self, $method, $access_token, $params ) = @_;
 
     Carp::croak("method and access_token required for this action")
       unless ($method && $access_token);
