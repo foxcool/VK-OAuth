@@ -28,12 +28,13 @@ sub new {
 sub authorize {
     my ($self, $params) = @_;
 
+    my %params = %$params if $params && %$params;
     my $url = URI->new('https://oauth.vk.com/authorize');
     $url->query_form(
         client_id     => $self->{app_id},
         response_type => 'code',
         redirect_uri  => $self->{postback},
-        $params && %$params ? %$params : undef,
+        %params,
     );
     return $url;
 }
@@ -62,10 +63,11 @@ sub request {
 
     Carp::croak("method and access_token required for this action")
       unless ($method && $access_token);
+    my %params = %$params if $params && %$params;
     my $url = URI->new('https://api.vk.com/method/' . $method);
     $url->query_form(
         access_token => $access_token,
-        $params && %$params ? %$params : undef,
+        %params,
     );
     my $response = $self->{ua}->get($url);
     return 0 unless $response->is_success;
