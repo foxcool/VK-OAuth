@@ -188,6 +188,6 @@ More information: http://vk.com/developers.php
 
 =head1 AUTHOR
 
-Copyright 2012 Alexander Babenko.
+Alexander Babenko (foxcool@cpan.org) for Setup.ru (http://setup.ru)
 
 =cut
